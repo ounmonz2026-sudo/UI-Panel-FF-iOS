@@ -2,40 +2,41 @@ workflows:
   ios-build:
     name: iOS Test Build (Capacitor)
     max_build_duration: 60
-
+    
     instance_type: mac_mini_m1
-        environment:
+    
+    environment:
       xcode: latest
       node: latest
     
     scripts:
       - name: Install Node Modules
-        script:
+        script: |
           npm install
 
       - name: Build Web Code (Vue.js)
-        script:
+        script: |
           npm run build
 
       - name: Sync Web to iOS Native Project
-        script:
-          npx cap sync ios  
+        script: |
+          npx cap sync ios
+
       - name: Update CocoaPods Repo
-        script:
+        script: |
           pod repo update
+
       - name: Install CocoaPods
-        script:
+        script: |
           pod install --project-directory=ios
 
       - name: Build Xcode Project (Final Compile Test)
-        script:
+        script: |
           xcode-project build \
             --project "ios/App/App.xcodeproj" \
             --scheme "App" \
             --configuration "Release" \
             --only-archs "arm64 x86_64"
-
-
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/archive/*.xcarchive

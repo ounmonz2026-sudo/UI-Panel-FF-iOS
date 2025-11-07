@@ -5,6 +5,9 @@ use_frameworks!
 
 # ត្រូវប្រាកដថា target នេះផ្គូផ្គងនឹងឈ្មោះ App របស់អ្នក (App)
 target 'App' do
+  # ប្រើ Path ធម្មតាដែល CocoaPods ចូលចិត្ត
+  project 'App/App.xcodeproj'
+  
   # Pods សម្រាប់ Capacitor
   pod 'Capacitor', :path => '../node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../node_modules/@capacitor/ios'

@@ -2,47 +2,40 @@ workflows:
   ios-build:
     name: iOS Test Build (Capacitor)
     max_build_duration: 60
-    
-    # ប្រើ Mac Server សម្រាប់ Build iOS App
+
     instance_type: mac_mini_m1
-    
-    environment:
-      # កំណត់ Environment សម្រាប់ Capacitor/Node/Xcode
+        environment:
       xcode: latest
       node: latest
     
     scripts:
       - name: Install Node Modules
-        script: |
+        script:
           npm install
 
       - name: Build Web Code (Vue.js)
-        script: |
+        script:
           npm run build
 
       - name: Sync Web to iOS Native Project
-        script: |
-          npx cap sync ios
-          # ⚠️ បន្ថែម Command នេះដើម្បីធានាថា File Native គ្រប់គ្រាន់
-          npx cap open ios
-          
+        script:
+          npx cap sync ios  
+      - name: Update CocoaPods Repo
+        script:
+          pod repo update
       - name: Install CocoaPods
-        # ប្រើ pod install ដោយកំណត់ Path ទៅកាន់ Folder ios ដោយផ្ទាល់
-        script: |
-          # Command នេះដំឡើង Pods ដោយមើល Podfile នៅក្នុង folder ios
+        script:
           pod install --project-directory=ios
 
       - name: Build Xcode Project (Final Compile Test)
-        # Command Build ខ្លួនឯង
-        script: |
+        script:
           xcode-project build \
             --project "ios/App/App.xcodeproj" \
             --scheme "App" \
             --configuration "Release" \
             --only-archs "arm64 x86_64"
 
-    # ផ្នែកនេះនឹងបរាជ័យព្រោះអ្នកមិនទាន់មាន Apple Developer Account
-    # ប៉ុន្តែវាបង្ហាញថាការ Compile គឺជោគជ័យ
+
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/archive/*.xcarchive

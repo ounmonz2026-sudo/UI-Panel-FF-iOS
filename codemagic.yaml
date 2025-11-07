@@ -2,49 +2,45 @@ workflows:
   ios-build:
     name: iOS Test Build (Capacitor)
     max_build_duration: 60
-    environment:
-     
-      xcode: latest
-      # កំណត់ Node version ព្រោះ Vue.js/Capacitor ប្រើ Node
-      node: latest
     
-    # ជ្រើសរើស Mac server សម្រាប់ build iOS
+    # ប្រើ Mac Server សម្រាប់ Build iOS App
     instance_type: mac_mini_m1
     
+    environment:
+      # កំណត់ Environment សម្រាប់ Capacitor/Node/Xcode
+      xcode: latest
+      node: latest
+    
     scripts:
-      - name: Install dependencies (Node Modules)
-        # ដំណើរការ npm install ក្នុង folder របស់អ្នក
+      - name: Install Node Modules
         script: |
           npm install
 
       - name: Build Web Code (Vue.js)
-        # ដំណើរការ build command របស់ Vue
         script: |
           npm run build
 
       - name: Sync Web to iOS Native Project
-        # ផ្ទេរ code web ចូលទៅក្នុង folder ios
         script: |
           npx cap sync ios
 
       - name: Install CocoaPods
-        # ដំឡើង dependencies របស់ iOS
+        # ប្រើ pod install ដោយកំណត់ Path ទៅកាន់ Folder ios ដោយផ្ទាល់
         script: |
-          cd ios
-          pod install
+          # Command នេះដំឡើង Pods ដោយមើល Podfile នៅក្នុង folder ios
+          pod install --project-directory=ios
 
-      - name: Build Xcode Project (Test Build Only)
-        # Command build Xcode
+      - name: Build Xcode Project (Final Compile Test)
+        # Command Build ខ្លួនឯង
         script: |
           xcode-project build \
             --project "ios/App/App.xcodeproj" \
             --scheme "App" \
             --configuration "Release" \
-            # កំណត់ឲ្យ Build ត្រឹមតែ architecture របស់ simulator/device
             --only-archs "arm64 x86_64"
 
     # ផ្នែកនេះនឹងបរាជ័យព្រោះអ្នកមិនទាន់មាន Apple Developer Account
-    # បើចង់ Build ឲ្យចេញ File .ipa ត្រូវបង់លុយ $99/ឆ្នាំ
+    # ប៉ុន្តែវាបង្ហាញថាការ Compile គឺជោគជ័យ
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/archive/*.xcarchive

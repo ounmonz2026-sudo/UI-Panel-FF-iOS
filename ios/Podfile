@@ -1,0 +1,14 @@
+# Podfile នេះត្រូវបានបង្កើតដោយ Capacitor
+
+platform :ios, '13.0'
+use_frameworks!
+
+# ត្រូវប្រាកដថា target នេះផ្គូផ្គងនឹងឈ្មោះ App របស់អ្នក (App)
+target 'App' do
+  # Pods សម្រាប់ Capacitor
+  pod 'Capacitor', :path => '../node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../node_modules/@capacitor/ios'
+  
+  # បន្ថែម Plugins ផ្សេងទៀតដែលអ្នកត្រូវការនៅទីនេះ
+  # ឧទាហរណ៍: pod 'Google-Maps-iOS-Utils'
+end

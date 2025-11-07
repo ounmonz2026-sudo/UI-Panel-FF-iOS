@@ -9,9 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react-dom": "^19.2.0",
+    "@capacitor/cli": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/ios": "^7.4.4",
     "@google/genai": "^1.29.0",
-    "react": "^19.2.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

@@ -23,7 +23,9 @@ workflows:
       - name: Sync Web to iOS Native Project
         script: |
           npx cap sync ios
-
+          # ⚠️ បន្ថែម Command នេះដើម្បីធានាថា File Native គ្រប់គ្រាន់
+          npx cap open ios
+          
       - name: Install CocoaPods
         # ប្រើ pod install ដោយកំណត់ Path ទៅកាន់ Folder ios ដោយផ្ទាល់
         script: |

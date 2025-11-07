@@ -3,8 +3,7 @@ workflows:
     name: iOS Test Build (Capacitor)
     max_build_duration: 60
     environment:
-      # ប្រើ macOS version ថ្មីសម្រាប់ Xcode
-      flutter: latest
+     
       xcode: latest
       # កំណត់ Node version ព្រោះ Vue.js/Capacitor ប្រើ Node
       node: latest
@@ -49,4 +48,3 @@ workflows:
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/archive/*.xcarchive
-      
